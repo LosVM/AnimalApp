@@ -1,14 +1,9 @@
 # IDE files
 .idea/
 *.iml
-*.iws
-*.ipr
 out/
-target/
-
 # Compiled files
 *.class
-
 # OS files
 .DS_Store
 Thumbs.db
