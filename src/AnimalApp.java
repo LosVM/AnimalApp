@@ -80,12 +80,26 @@ public class AnimalApp {
 
     private static int getAge(Scanner scanner) {
         System.out.println("Введите возраст: ");
-        return scanner.nextInt();
+        while (!scanner.hasNextInt()) {
+            System.out.println("Для параметра 'Возраст' допускается только ввод числа. Введите число");
+            scanner.next();
+        }
+
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        return age;
     }
 
     private static int getWeight(Scanner scanner) {
         System.out.println("Введите вес: ");
-        return scanner.nextInt();
+        while (!scanner.hasNextInt()) {
+            System.out.println("Для параметра 'Вес' допускается только ввод числа. Введите число");
+            scanner.next();
+        }
+
+        int weight = scanner.nextInt();
+        scanner.nextLine();
+        return weight;
     }
 
     private static Color getColor(Scanner scanner) {
