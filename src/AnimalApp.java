@@ -81,37 +81,66 @@ public class AnimalApp {
     private static int getAge(Scanner scanner) {
         System.out.println("Введите возраст: ");
         while (true) {
-            while (!scanner.hasNextInt()) {
-                System.out.println("Для параметра 'Возраст' допускается только ввод числа. Введите число");
-                scanner.next();
-            }
+            String commandInput = scanner.next();
 
-            int age = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                int age = Integer.parseInt(commandInput);
+                if (age > 0 && age <= 100) {
+                    scanner.nextLine();
+                    return age;
+                } System.out.println("Возраст должен быть от 1 до 100");
 
-            if (age > 0) {
-                return age;
+            } catch (NumberFormatException e) {
+                System.out.println("Для параметра 'Возраст' допускается только ввод целого числа. Введите число:");
             }
-            System.out.println("Введите целое положительное число");
         }
+
+//        while (true) {
+//            while (!scanner.hasNextInt()) {
+//                System.out.println("Для параметра 'Возраст' допускается только ввод числа. Введите число");
+//                scanner.next();
+//            }
+//
+//            int age = scanner.nextInt();
+//            scanner.nextLine();
+//
+//            if (age > 0) {
+//                return age;
+//            }
+//            System.out.println("Введите целое положительное число");
+//        }
     }
 
     private static int getWeight(Scanner scanner) {
         System.out.println("Введите вес: ");
         while (true) {
-            while (!scanner.hasNextInt()) {
-                System.out.println("Для параметра 'Вес' допускается только ввод числа. Введите число");
-                scanner.next();
-            }
+            String commandInput = scanner.next();
 
-            int weight = scanner.nextInt();
-            scanner.nextLine();
-
-            if (weight > 0) {
-                return weight;
+            try {
+                int weight = Integer.parseInt(commandInput);
+                if (weight > 0 && weight <= 200) {
+                    scanner.nextLine();
+                    return weight;
+                } System.out.println("Вес должен быть от 1 до 200");
+            } catch (NumberFormatException e) {
+                System.out.println("Для параметра 'Вес' допускается только ввод целого числа. Введите число:");
             }
-            System.out.println("Введите целое положительное число");
         }
+
+//        while (true) {
+//            while (!scanner.hasNextInt()) {
+//                System.out.println("Для параметра 'Вес' допускается только ввод числа. Введите число");
+//                scanner.next();
+//            }
+//
+//            int weight = scanner.nextInt();
+//            scanner.nextLine();
+//
+//            if (weight > 0) {
+//                return weight;
+//            }
+//            System.out.println("Введите целое положительное число");
+//        }
     }
 
     private static Color getColor(Scanner scanner) {
