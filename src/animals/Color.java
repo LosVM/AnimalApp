@@ -6,7 +6,8 @@ import java.util.List;
 public enum Color {
 
     BLACK("чёрный"),
-    WHITE("белый");
+    WHITE("белый"),
+    GRAY("серый");
 
     //строка ниже вывод значения?
     private final String value;

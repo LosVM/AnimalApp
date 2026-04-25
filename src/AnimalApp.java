@@ -108,7 +108,7 @@ public class AnimalApp {
             if (commandInput != null) {
                 System.out.println("Введена неверная команда, попробуйте ещё раз");
             }
-            System.out.println("Введите цвет: ");
+            System.out.println("Введите цвет (Чёрный, Белый, Серый): ");
             commandInput = scanner.next();
         }
         return Color.fromString(commandInput);
