@@ -2,31 +2,59 @@ import animals.Animal;
 import animals.AnimalType;
 import animals.Color;
 import animals.factory.AnimalFactory;
+import animals.tables.AnimalTable;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class AnimalApp {
 
+
 //  вывод меню?
     public static void main(String[] args) {
-        List<Animal> animals = new ArrayList<>();
+
+
+//        List<Animal> animals = new ArrayList<>();
         AnimalFactory factory = new AnimalFactory();
 
         Scanner scanner = new Scanner(System.in);
         Command currentCommand = null;
+        AnimalTable animalTable = null;
+
+        try {
+            animalTable = new AnimalTable();
+        } catch (SQLException e) {
+            System.out.println("Что-то не так с таблицей: " + e.getMessage());
+            return;
+        }
 
         do {
           currentCommand = getCommand(scanner);
           if (currentCommand == Command.LIST) {
-              if (animals.isEmpty()) {
-                  System.out.println("Список пуст");
-              }
-              for (Animal animal: animals) {
-                  System.out.println(animal);
+//              if (animals.isEmpty()) {
+//                  System.out.println("Список пуст");
+//              }
+//              for (Animal animal: animals) {
+//                  System.out.println(animal);
+//              }
+
+              // читаем данные из БД
+              try {
+                  List<Animal> animalIsFromDB = animalTable.getAll();
+                  if (animalIsFromDB.isEmpty()) {
+                      System.out.println("В списке нет значений");
+                  } else {
+                      for (Animal animal : animalIsFromDB) {
+                          System.out.println(animal);
+                      }
+                  }
+              } catch (SQLException e) {
+                  System.out.println("Ошибка при чтении БД: " + e.getMessage());
               }
           } else if (currentCommand == Command.ADD) {
+              try {
               AnimalType animalType = getAnimalType(scanner);
               Animal animal = factory.create(animalType);
               // запросить все параметры ТУТ
@@ -34,8 +62,12 @@ public class AnimalApp {
               animal.setAge(getAge(scanner));
               animal.setWeight(getWeight(scanner));
               animal.setColor(getColor(scanner));
-              animals.add(animal);
+//              animals.add(animal);
+              animalTable.insert(animal, animalType); // сохранение в БД
               animal.say();
+              } catch (SQLException e) {
+                  System.out.println("Ошибка при сохранении в БД: " + e.getMessage());
+              }
           }
         } while (currentCommand != Command.EXIT);
     }
@@ -53,9 +85,6 @@ public class AnimalApp {
         return Command.fromString(commandInput);
     }
 
-//    private static AnimalType getAnimalType(Scanner scanner) {
-//        return AnimalType.CAT; // Это заглушка. Дописать абсолютно аналогично как выше в getCommand
-//    }
 
     private static AnimalType getAnimalType(Scanner scanner) {
         String commandInput = null;
@@ -65,9 +94,7 @@ public class AnimalApp {
             }
             System.out.println("Введите тип животного:");
             commandInput = scanner.next();
-//            if (commandInput.equals("CAT")) return AnimalType.CAT;
-//            if (commandInput.equals("DOG")) return AnimalType.DOG;
-//            if (commandInput.equals("DUCK")) return AnimalType.DUCK;
+
         }
         return AnimalType.fromString(commandInput);
     }
@@ -95,20 +122,6 @@ public class AnimalApp {
             }
         }
 
-//        while (true) {
-//            while (!scanner.hasNextInt()) {
-//                System.out.println("Для параметра 'Возраст' допускается только ввод числа. Введите число");
-//                scanner.next();
-//            }
-//
-//            int age = scanner.nextInt();
-//            scanner.nextLine();
-//
-//            if (age > 0) {
-//                return age;
-//            }
-//            System.out.println("Введите целое положительное число");
-//        }
     }
 
     private static int getWeight(Scanner scanner) {
@@ -127,20 +140,6 @@ public class AnimalApp {
             }
         }
 
-//        while (true) {
-//            while (!scanner.hasNextInt()) {
-//                System.out.println("Для параметра 'Вес' допускается только ввод числа. Введите число");
-//                scanner.next();
-//            }
-//
-//            int weight = scanner.nextInt();
-//            scanner.nextLine();
-//
-//            if (weight > 0) {
-//                return weight;
-//            }
-//            System.out.println("Введите целое положительное число");
-//        }
     }
 
     private static Color getColor(Scanner scanner) {
@@ -154,4 +153,5 @@ public class AnimalApp {
         }
         return Color.fromString(commandInput);
     }
+
 }
