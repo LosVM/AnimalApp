@@ -43,7 +43,7 @@ public abstract class AbsTable {
 
         String sqlRequest = String.format("SELECT %s FROM %s", sqlColumns, tableName);
         if (!predicate.isEmpty()) {
-            sqlRequest += String.format("WHERE %s", predicate);
+            sqlRequest += String.format(" WHERE %s", predicate);
         }
 
         ResultSet resultSet = this.dbConnector.executeWithData(sqlRequest);
@@ -61,6 +61,4 @@ public abstract class AbsTable {
 
         return result;
     }
-
-//    Добавить метод редактирования таблицы
 }

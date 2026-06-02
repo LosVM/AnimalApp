@@ -60,6 +60,28 @@ public List<Animal> getAll() throws SQLException {
     return animals;
 }
 
+// чтение из БД животных определённого типа
+    public List<Animal> getByType(AnimalType type) throws SQLException {
+        String predicate = "type = '" + type.name() + "'";
+        List<Map<String, String>> rows = listDataFromTable(predicate, "id", "type", "name", "age", "weight", "color");
+        List<Animal> animals = new ArrayList<>();
+        AnimalFactory factory = new AnimalFactory();
+        for (Map<String, String> row : rows) {
+            int id = Integer.parseInt(row.get("id"));
+            AnimalType rowType = AnimalType.valueOf(row.get("type"));
+            Animal animal = factory.create(rowType);
+            animal.setType(rowType);
+            animal.setId(id);
+            animal.setName(row.get("name"));
+            animal.setAge(Integer.parseInt(row.get("age")));
+            animal.setWeight(Integer.parseInt(row.get("weight")));
+            Color color = Color.fromString(row.get("color"));
+            animal.setColor(color);
+            animals.add(animal);
+        }
+        return animals;
+    }
+
 //    редактирование
     public void update(Animal animal) throws SQLException {
         String sql = String.format(

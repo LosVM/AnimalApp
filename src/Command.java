@@ -6,7 +6,8 @@ public enum Command {
     ADD,
     LIST,
     EXIT,
-    EDIT;
+    EDIT,
+    FILTER;
 
 //  добавляет все констаны в строку
     public static final List<String> VALUES = collectValues();

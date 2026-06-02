@@ -11,10 +11,7 @@ import java.util.Scanner;
 
 public class AnimalApp {
 
-
-//  вывод меню?
     public static void main(String[] args) {
-
 
 //        List<Animal> animals = new ArrayList<>();
         AnimalFactory factory = new AnimalFactory();
@@ -110,6 +107,22 @@ public class AnimalApp {
                   System.out.println("Животное успешно обновлено.");
               } catch (SQLException e) {
                   System.out.println("Ошибка при редактировании: " + e.getMessage());
+              }
+          } else if (currentCommand == Command.FILTER) { // ветка с фильтрацией
+              try {
+                  System.out.println("Введите тип животного для фильтации (CAT/DOG/DUCK):");
+                  AnimalType filterType = getAnimalType(scanner);
+                  List<Animal> filteredAnimals = animalTable.getByType(filterType);
+                  if (filteredAnimals.isEmpty()) {
+                      System.out.println("Животные такого типа отсутствуют в БД");
+                  } else {
+                      System.out.println("Животные типа " + filterType.name() + ":");
+                      for (Animal a : filteredAnimals) {
+                          System.out.println(a);
+                      }
+                  }
+              } catch (SQLException e) {
+                  System.out.println("Ошибка при выполнении фильтрации: " + e.getMessage());
               }
           }
         } while (currentCommand != Command.EXIT);
