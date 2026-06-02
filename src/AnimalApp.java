@@ -68,6 +68,49 @@ public class AnimalApp {
               } catch (SQLException e) {
                   System.out.println("Ошибка при сохранении в БД: " + e.getMessage());
               }
+          } else if (currentCommand == Command.EDIT) { //ветка редактирования в БД
+              try {
+                  List<Animal> animals = animalTable.getAll();
+                  if (animals.isEmpty()) {
+                      System.out.println("Нет животных для редактирования!");
+                      continue;
+                  }
+                  System.out.println("Список животных доступных для редактирования:");
+                  for (Animal a : animals) {
+                      System.out.println(a.getId() + ": " + a.getName() + " (" + a.getType().name() + ")");
+                  }
+                  System.out.print("Введите ID животного для редактирования:");
+                  int id = scanner.nextInt();
+                  scanner.nextLine(); // очистка буфера
+                  Animal animalToEdit = null;
+                  for (Animal a : animals) {
+                      if (a.getId() == id) {
+                          animalToEdit = a;
+                          break;
+                      }
+                  }
+                  if (animalToEdit == null) {
+                      System.out.println("Отсутствует животное с таким ID!");
+                      continue;
+                  }
+                  // Запросить новые данные
+                  AnimalType newType = getAnimalType(scanner);
+                  String newName = getName(scanner);
+                  int newAge = getAge(scanner);
+                  int newWeight = getWeight(scanner);
+                  Color newColor = getColor(scanner);
+
+                  animalToEdit.setType(newType);
+                  animalToEdit.setName(newName);
+                  animalToEdit.setAge(newAge);
+                  animalToEdit.setWeight(newWeight);
+                  animalToEdit.setColor(newColor);
+
+                  animalTable.update(animalToEdit);
+                  System.out.println("Животное успешно обновлено.");
+              } catch (SQLException e) {
+                  System.out.println("Ошибка при редактировании: " + e.getMessage());
+              }
           }
         } while (currentCommand != Command.EXIT);
     }

@@ -9,15 +9,17 @@ import animals.pets.Dog;
 public class AnimalFactory {
 
     public Animal create(AnimalType type) {
+        Animal animal;
         if (type == AnimalType.CAT) {
-            return new Cat();
+            animal = new Cat();
+        } else if (type == AnimalType.DOG) {
+            animal = new Dog();
+        } else if (type == AnimalType.DUCK) {
+            animal = new Duck();
+        } else  {
+            return null;
         }
-        if (type == AnimalType.DOG) {
-            return new Dog();
-        }
-        if (type == AnimalType.DUCK) {
-            return new Duck();
-        }
-        return null;
-    }
+    animal.setType(type); // сохранение типа
+    return animal;
+}
 }

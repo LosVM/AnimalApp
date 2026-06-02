@@ -7,6 +7,7 @@ public abstract class Animal {
     private int weight;
     private Color color;
     private int id;
+    private AnimalType type;
 
     // гетеры и сетеры
     public String getName() {
@@ -47,6 +48,14 @@ public abstract class Animal {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public AnimalType getType() {
+        return type;
+    }
+
+    public void setType(AnimalType type) {
+        this.type = type;
     }
 
     // методы

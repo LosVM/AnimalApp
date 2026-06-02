@@ -48,6 +48,7 @@ public List<Animal> getAll() throws SQLException {
         int id = Integer.parseInt(row.get("id")); // получение id
         AnimalType type = AnimalType.valueOf(row.get("type"));
         Animal animal = factory.create(type);
+        animal.setType(type);
         animal.setId(id); // сохранение id
         animal.setName(row.get("name"));
         animal.setAge(Integer.parseInt(row.get("age")));
@@ -58,4 +59,18 @@ public List<Animal> getAll() throws SQLException {
     }
     return animals;
 }
+
+//    редактирование
+    public void update(Animal animal) throws SQLException {
+        String sql = String.format(
+                "UPDATE animals SET type='%s', name='%s', age=%d, weight=%d, color='%s' WHERE id=%d",
+                animal.getType().name(),
+                animal.getName(),
+                animal.getAge(),
+                animal.getWeight(),
+                animal.getColor().getValue(),
+                animal.getId()
+        );
+        this.dbConnector.execute(sql);
+    }
 }
