@@ -6,6 +6,7 @@ public abstract class Animal {
     private int age;
     private int weight;
     private Color color;
+    private int id;
 
     // гетеры и сетеры
     public String getName() {
@@ -40,6 +41,14 @@ public abstract class Animal {
         this.color = color;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     // методы
     public void say() {
         System.out.println("Я говорю");
@@ -59,6 +68,7 @@ public abstract class Animal {
 
     public String toString() {
         return String.format(
+                // добавить тут вывод ID?
                 "Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s", name, age, toPluralAge(), weight, getColorValue());
     }
 

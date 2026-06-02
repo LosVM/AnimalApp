@@ -17,6 +17,7 @@ public class AnimalTable extends AbsTable {
         super("animals");
 
         create(
+                "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY",
                 "type VARCHAR(10) NOT NULL",
                 "name VARCHAR(35) NOT NULL",
                 "age INT NOT NULL",
@@ -40,12 +41,14 @@ public class AnimalTable extends AbsTable {
 
 //    чтение всех животных в БД
 public List<Animal> getAll() throws SQLException {
-    List<Map<String, String>> rows = listDataFromTable("","type", "name", "age", "weight", "color");
+    List<Map<String, String>> rows = listDataFromTable("", "id", "type", "name", "age", "weight", "color");
     List<Animal> animals = new ArrayList<>();
     AnimalFactory factory = new AnimalFactory();
     for (Map<String, String> row : rows) {
+        int id = Integer.parseInt(row.get("id")); // получение id
         AnimalType type = AnimalType.valueOf(row.get("type"));
         Animal animal = factory.create(type);
+        animal.setId(id); // сохранение id
         animal.setName(row.get("name"));
         animal.setAge(Integer.parseInt(row.get("age")));
         animal.setWeight(Integer.parseInt(row.get("weight")));
