@@ -13,7 +13,6 @@ public class AnimalApp {
 
     public static void main(String[] args) {
 
-//        List<Animal> animals = new ArrayList<>();
         AnimalFactory factory = new AnimalFactory();
 
         Scanner scanner = new Scanner(System.in);
@@ -30,12 +29,6 @@ public class AnimalApp {
         do {
           currentCommand = getCommand(scanner);
           if (currentCommand == Command.LIST) {
-//              if (animals.isEmpty()) {
-//                  System.out.println("Список пуст");
-//              }
-//              for (Animal animal: animals) {
-//                  System.out.println(animal);
-//              }
 
               // читаем данные из БД
               try {
@@ -59,7 +52,7 @@ public class AnimalApp {
               animal.setAge(getAge(scanner));
               animal.setWeight(getWeight(scanner));
               animal.setColor(getColor(scanner));
-//              animals.add(animal);
+
               animalTable.insert(animal, animalType); // сохранение в БД
               animal.say();
               } catch (SQLException e) {
@@ -156,7 +149,6 @@ public class AnimalApp {
     }
 
     private static String getName(Scanner scanner) {
-//        return "Барсик"; // заглушка
         System.out.println("Введите имя:");
         return scanner.next();
     }

@@ -8,7 +8,4 @@ public class Cat extends Animal {
         System.out.println("Мяу");
     }
 
-//    public void catSay() {
-//        super.say();
-//    }
 }

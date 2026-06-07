@@ -26,7 +26,6 @@ public abstract class AbsTable {
         }
     }
 
-
 //    создание таблицы
     public void create(String... columns) throws SQLException {
         String sqlRequest = String.format("CREATE TABLE IF NOT EXISTS %s (%s)", tableName, String.join(", ", columns));

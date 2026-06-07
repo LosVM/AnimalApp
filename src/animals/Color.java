@@ -60,5 +60,4 @@ public enum Color {
         return value;
     }
 
-
 }

@@ -8,9 +8,6 @@ public enum AnimalType {
     DOG,
     DUCK;
 
-
-// Дописать как в Command?
-
 public static final List<String> VALUES = collectValues();
 
 private static List<String> collectValues() {
